@@ -1,0 +1,46 @@
+.logo {
+  width: 100px;
+}
+
+q {
+  font-style: italic;
+  font-size: 1.2rem;
+  quotes: "« " " »";
+}
+
+.btn-primary.reign-radio {
+  width: 98px;
+  height: 31px;
+  padding: 3px 10px 0 17px;
+  border-radius: 2px;
+  border: solid 1px #d6d6d6;
+  background-color: #fcfcfc;
+
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.75;
+  letter-spacing: normal;
+  text-align: center;
+  color: #606060;
+
+  margin-bottom: 68px;
+
+  &.active {
+    border: solid 1px #1797ff;
+    color: #1797ff;
+  }
+}
+
+.container.reign-container {
+  max-width: 100%;
+  padding: 0 150px;
+  margin-bottom: 38px;
+}
+
+.container.posts {
+  max-width: 100%;
+  padding: 0 150px;
+}

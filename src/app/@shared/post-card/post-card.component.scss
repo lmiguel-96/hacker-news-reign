@@ -1,0 +1,53 @@
+.card.card-reign {
+  width: 100%;
+  height: 90px;
+  padding: 14px 26px;
+  opacity: 0.8;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  background-color: #fff;
+  position: relative;
+
+  .card-body {
+    width: calc(100% - 68px);
+    padding: 0;
+
+    .card-title {
+      height: 13px;
+      margin: 0 0 7px 0;
+      font-family: Roboto;
+      font-size: 11px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #767676;
+    }
+
+    .card-text {
+      font-family: Roboto;
+      font-size: 14px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.43;
+      letter-spacing: 0.25px;
+      color: #6b6b6b;
+    }
+  }
+
+  .fav-control {
+    position: absolute;
+    width: 68px;
+    height: 90px;
+    margin: 0 0 0 16px;
+    padding: 35px 22px 33px;
+    border-radius: 6px;
+    border: solid 1px rgba(96, 96, 96, 0.06);
+    background-color: rgba(96, 96, 96, 0.06);
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+}
