@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { SharedModule } from '@shared';
 import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
+import { PostService } from './quote.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,7 +14,7 @@ describe('HomeComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientTestingModule],
         declarations: [HomeComponent],
-        providers: [QuoteService],
+        providers: [PostService],
       }).compileComponents();
     })
   );

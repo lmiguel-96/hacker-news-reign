@@ -1,44 +1,48 @@
-<div class="container-fluid">
-  <div class="container d-flex justify-content-center">
-    <form>
-      <div class="btn-group" role="group" ngbRadioGroup name="radioBasic">
-        <label ngbButtonLabel class="btn-primary reign-radio">
-          <input ngbButton type="radio" class="btn-check" value="1" />
-          All
-        </label>
-        <label ngbButtonLabel class="btn-primary reign-radio">
-          <input ngbButton type="radio" class="btn-check" value="middle" />
-          My Faves
-        </label>
-      </div>
-    </form>
-  </div>
+<ng-container *ngIf="{ page: page$ | async, query: query$ | async, posts: posts$ | async } as state">
+  <div class="container-fluid">
+    <div class="container d-flex justify-content-center">
+      <form>
+        <div class="btn-group" role="group" ngbRadioGroup name="radioBasic">
+          <label ngbButtonLabel class="btn-primary reign-radio">
+            <input ngbButton type="radio" class="btn-check" value="1" />
+            All
+          </label>
+          <label ngbButtonLabel class="btn-primary reign-radio">
+            <input ngbButton type="radio" class="btn-check" value="middle" />
+            My Faves
+          </label>
+        </div>
+      </form>
+    </div>
 
-  <div class="container reign-container">
-    <div ngbDropdown class="d-inline-block">
-      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem>Angular</button>
-        <button ngbDropdownItem>React</button>
-        <button ngbDropdownItem>Vuejs</button>
+    <div class="container reign-container">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          {{ selectedQuery$ | async }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="handleSearchQuery('angular')">Angular</button>
+          <button ngbDropdownItem (click)="handleSearchQuery('react')">React</button>
+          <button ngbDropdownItem (click)="handleSearchQuery('vuejs')">Vuejs</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container posts">
+      <div class="row">
+        <div class="col-6">
+          <reign-post-card></reign-post-card>
+        </div>
+        <div class="col-6">
+          <reign-post-card></reign-post-card>
+        </div>
+        <div class="col-6">
+          <reign-post-card></reign-post-card>
+        </div>
+        <div class="col-6">
+          <reign-post-card></reign-post-card>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="container posts">
-    <div class="row">
-      <div class="col-6">
-        <reign-post-card></reign-post-card>
-      </div>
-      <div class="col-6">
-        <reign-post-card></reign-post-card>
-      </div>
-      <div class="col-6">
-        <reign-post-card></reign-post-card>
-      </div>
-      <div class="col-6">
-        <reign-post-card></reign-post-card>
-      </div>
-    </div>
-  </div>
-</div>
+</ng-container>
