@@ -13,6 +13,7 @@ import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     RouterModule,
     TranslateModule.forRoot(),
+    TimeagoModule.forRoot(),
     NgbModule,
     SharedModule,
     ShellModule,

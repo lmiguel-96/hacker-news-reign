@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HackerNewsQueryResult } from '@app/@core/models/post.model';
 import {
   BehaviorSubject,
   defaultIfEmpty,
@@ -29,8 +30,7 @@ export class HomeComponent {
     map((paramsMap) => paramsMap.get('query')),
     defaultIfEmpty('angular'),
     distinctUntilChanged(),
-    shareReplay(1),
-    tap((q) => this.selectedQuery$.next(q ?? 'angular'))
+    shareReplay(1)
   );
 
   posts$ = combineLatest([this.page$, this.query$]).pipe(
@@ -39,10 +39,25 @@ export class HomeComponent {
       const searchedQuery = query ?? 'angular';
       return this.postService.getPosts({ page: selectedPage, query: searchedQuery });
     }),
+    map((results: HackerNewsQueryResult) => {
+      const filteredHits = results.hits.filter((hit) => {
+        if (!hit.story_title) {
+          return false;
+        }
+        if (!hit.story_url) {
+          return false;
+        }
+        if (!hit.created_at_i) {
+          return false;
+        }
+        return true;
+      });
+      results.hits = filteredHits;
+      return results;
+    }),
+    defaultIfEmpty({ hits: [] }),
     shareReplay(1)
   );
-
-  selectedQuery$ = new BehaviorSubject<string>('angular');
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private postService: PostService) {}
 

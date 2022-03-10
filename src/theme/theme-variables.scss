@@ -49,7 +49,10 @@ $theme-colors: (
   dark: $gray-800,
 );
 
+// Page main background
 $body-bg: #fcfcfc;
+
+$grid-gutter-width: 40px;
 
 // Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
 // in components.

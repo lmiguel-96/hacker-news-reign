@@ -1,8 +1,12 @@
 <div class="card card-reign">
   <div class="card-body">
-    <h5 class="card-title"><i class="far fa-clock"></i> Card title</h5>
+    <h5 class="card-title">
+      <i class="far fa-clock"></i>
+      <span>{{ createdAt$ | async | timeago: 'live' }}</span>
+      By {{ author$ | async }}
+    </h5>
     <p class="card-text">
-      Some quick example text to build on the card title and make up the bulk of the card's content.
+      {{ title$ | async }}
     </p>
   </div>
   <div class="fav-control">

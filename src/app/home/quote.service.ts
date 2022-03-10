@@ -19,11 +19,11 @@ export interface PostQueryContext {
 export class PostService {
   constructor(private httpClient: HttpClient) {}
 
-  getPosts(context: PostQueryContext): Observable<HackerNewsQueryResult | string> {
+  getPosts(context: PostQueryContext): Observable<HackerNewsQueryResult> {
     return this.httpClient.get('/api' + routes.posts(context)).pipe(
       map((body: any) => body as HackerNewsQueryResult),
       tap((v) => console.log(v)),
-      catchError(() => of('Error, could not load posts :-('))
+      catchError(() => of({ hits: [] }) as unknown as Observable<HackerNewsQueryResult>)
     );
   }
 }

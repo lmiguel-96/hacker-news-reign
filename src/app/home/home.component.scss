@@ -38,9 +38,29 @@ q {
   max-width: 100%;
   padding: 0 150px;
   margin-bottom: 38px;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (max-width: 576px) {
+    padding: 0 40px;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (max-width: 768px) {
+    padding: 0 40px;
+  }
 }
 
 .container.posts {
   max-width: 100%;
   padding: 0 150px;
+
+  // Small devices (landscape phones, 576px and up)
+  @media (max-width: 576px) {
+    padding: 0 40px;
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (max-width: 768px) {
+    padding: 0 40px;
+  }
 }
