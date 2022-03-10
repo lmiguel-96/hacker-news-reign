@@ -55,7 +55,7 @@ export class HomeComponent {
       results.hits = filteredHits;
       return results;
     }),
-    defaultIfEmpty({ hits: [] }),
+    defaultIfEmpty({ hits: [] } as unknown as HackerNewsQueryResult),
     shareReplay(1)
   );
 

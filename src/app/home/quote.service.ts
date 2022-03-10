@@ -5,7 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { HackerNewsQueryResult } from '@app/@core/models/post.model';
 
 const routes = {
-  posts: (c: PostQueryContext) => `/v1/search_by_date?query=${c.query}&page=${c.page}`,
+  posts: (c: PostQueryContext) => `/v1/search_by_date?query=${c.query}&page=${c.page}&hitsPerPage=8`,
 };
 
 export interface PostQueryContext {
