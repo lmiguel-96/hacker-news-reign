@@ -5,14 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  menuHidden = true;
-
+export class HeaderComponent {
   constructor() {}
-
-  ngOnInit() {}
-
-  toggleMenu() {
-    this.menuHidden = !this.menuHidden;
-  }
 }
