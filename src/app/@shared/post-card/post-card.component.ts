@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HackerNewsPost } from '@app/@core/models/post.model';
-import { BehaviorSubject, filter, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'reign-post-card',
@@ -26,7 +26,24 @@ export class PostCardComponent {
   @Input() set url(url: HackerNewsPost['story_url']) {
     this.url$.next(url);
   }
-  url$ = new Subject<HackerNewsPost['story_url']>();
+  url$ = new BehaviorSubject<HackerNewsPost['story_url']>('');
+
+  @Input() set isSaved(isSaved: boolean) {
+    this.isSaved$.next(isSaved);
+  }
+  isSaved$ = new BehaviorSubject<boolean>(false);
+
+  @Output() postFaved = new EventEmitter<null>();
+
+  @Output() postClicked = new EventEmitter<null>();
 
   constructor() {}
+
+  handleNavigateToAnotherPage() {
+    this.postClicked.emit();
+  }
+
+  handleFavePostSaved() {
+    this.postFaved.emit();
+  }
 }

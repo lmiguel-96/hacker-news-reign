@@ -4,10 +4,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { LoaderComponent } from './loader/loader.component';
 import { TimeagoModule } from 'ngx-timeago';
+import { SavedPipe } from './pipes/saved.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [TranslateModule, CommonModule],
-  declarations: [LoaderComponent],
-  exports: [LoaderComponent, TimeagoModule],
+  declarations: [LoaderComponent, SavedPipe],
+  exports: [LoaderComponent, TimeagoModule, SavedPipe, FormsModule, ReactiveFormsModule],
 })
 export class SharedModule {}

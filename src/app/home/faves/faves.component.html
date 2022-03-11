@@ -1,0 +1,47 @@
+<ng-container
+  *ngIf="{
+    posts: posts$ | async,
+    favedPostsListIds: favedPostsListIds$ | async,
+    page: page$ | async
+  } as state"
+>
+  <div class="container posts">
+    <div class="row gy-4">
+      <div
+        class="col-md-12 col-sm-12 col-lg-6"
+        *ngFor="
+          let post of state.posts ?? []
+            | paginate
+              : {
+                  id: 'posts-pagination',
+                  itemsPerPage: 8,
+                  currentPage: state.page ?? 0,
+                  totalItems: state.posts?.length
+                }
+        "
+      >
+        <reign-post-card
+          [author]="post.author"
+          [title]="post.story_title"
+          [url]="post.story_url"
+          [createdAt]="post.created_at"
+          [isSaved]="post | saved: state.favedPostsListIds ?? []"
+          (postFaved)="handleFavPostClicked(post)"
+          (postClicked)="handlePostClicked(post)"
+        ></reign-post-card>
+      </div>
+    </div>
+  </div>
+
+  <pagination-controls
+    id="posts-pagination"
+    class="reign-pagination"
+    (pageChange)="handlePageChange($event)"
+    (pageChange)="handlePageChange($event)"
+    [maxSize]="10"
+    [directionLinks]="true"
+    nextLabel=""
+    previousLabel=""
+    [responsive]="true"
+  ></pagination-controls>
+</ng-container>

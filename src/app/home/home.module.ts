@@ -8,6 +8,8 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { PostCardComponent } from '../@shared/post-card/post-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NewsComponent } from './news/news.component';
+import { FavesComponent } from './faves/faves.component';
 
 @NgModule({
   imports: [
@@ -19,6 +21,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgbDropdownModule,
     NgxPaginationModule,
   ],
-  declarations: [HomeComponent, PostCardComponent],
+  declarations: [HomeComponent, PostCardComponent, NewsComponent, FavesComponent],
 })
 export class HomeModule {}

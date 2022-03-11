@@ -1,0 +1,103 @@
+<ng-container
+  *ngIf="{
+    page: page$ | async,
+    query: query$ | async,
+    posts: posts$ | async,
+    favedPostsListIds: favedPostsListIds$ | async,
+    isLoading: isLoading$ | async
+  } as state"
+>
+  <div class="container reign-container">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>
+        <ng-container [ngSwitch]="state.query">
+          <ng-container *ngSwitchCase="'angular'" [ngTemplateOutlet]="angular"></ng-container>
+          <ng-container *ngSwitchCase="'react'" [ngTemplateOutlet]="react"></ng-container>
+          <ng-container *ngSwitchCase="'vuejs'" [ngTemplateOutlet]="vuejs"></ng-container>
+          <ng-container *ngSwitchDefault>Select your news</ng-container>
+        </ng-container>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem (click)="handleSearchQuery('angular')">
+          <ng-container [ngTemplateOutlet]="angular"></ng-container>
+        </button>
+        <button ngbDropdownItem (click)="handleSearchQuery('react')">
+          <ng-container [ngTemplateOutlet]="react"></ng-container>
+        </button>
+        <button ngbDropdownItem (click)="handleSearchQuery('vuejs')">
+          <ng-container [ngTemplateOutlet]="vuejs"></ng-container>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!state.isLoading; else loadingTemplate" class="container posts">
+    <div class="row gy-4">
+      <div
+        class="col-md-12 col-sm-12 col-lg-6"
+        *ngFor="
+          let post of state.posts?.hits ?? []
+            | paginate
+              : {
+                  id: 'posts-pagination',
+                  itemsPerPage: 8,
+                  currentPage: state.page ?? 0,
+                  totalItems: 992
+                }
+        "
+      >
+        <reign-post-card
+          [author]="post.author"
+          [title]="post.story_title"
+          [url]="post.story_url"
+          [createdAt]="post.created_at"
+          [isSaved]="post | saved: state.favedPostsListIds ?? []"
+          (postFaved)="handleFavPostClicked(post)"
+          (postClicked)="handlePostClicked(post)"
+        ></reign-post-card>
+      </div>
+      <ng-container *ngIf="state.posts?.hits?.length === 0" [ngTemplateOutlet]="emptyStateTemplate"></ng-container>
+    </div>
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="container posts d-flex justify-content-center align-items-center h-100">
+      <reign-loader [isLoading]="state.isLoading"></reign-loader>
+    </div>
+  </ng-template>
+
+  <ng-template #emptyStateTemplate>
+    <div class="container posts d-flex flex-column justify-content-center align-items-center h-100">
+      <i class="fa fa-inbox fa-3x" aria-hidden="true"></i>
+      There are no items to show on this page :(
+    </div>
+  </ng-template>
+
+  <pagination-controls
+    *ngIf="!state.isLoading"
+    id="posts-pagination"
+    class="reign-pagination"
+    (pageChange)="handlePageChange($event)"
+    (pageChange)="handlePageChange($event)"
+    [maxSize]="10"
+    [directionLinks]="true"
+    nextLabel=""
+    previousLabel=""
+    [responsive]="true"
+  ></pagination-controls>
+</ng-container>
+
+<ng-template #angular>
+  <img src="assets/image-138.png" srcset="assets/image-138@2x.png 2x, assets/image-138@3x.png 3x" class="logo" />
+  Angular
+</ng-template>
+
+<ng-template #react>
+  <img src="assets/image-140.png" srcset="assets/image-140@2x.png 2x, assets/image-140@3x.png 3x" class="logo" />
+  React
+</ng-template>
+
+<ng-template #vuejs>
+  <img src="assets/image-141.png" srcset="assets/image-141@2x.png 2x, assets/image-141@3x.png 3x" class="logo" />
+  Vuejs
+</ng-template>

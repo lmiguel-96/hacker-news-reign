@@ -1,5 +1,5 @@
 <div class="card card-reign">
-  <div class="card-body">
+  <a class="card-body" [href]="url$ | async">
     <h5 class="card-title">
       <i class="far fa-clock"></i>
       <span>{{ createdAt$ | async | timeago: 'live' }}</span>
@@ -8,9 +8,9 @@
     <p class="card-text">
       {{ title$ | async }}
     </p>
-  </div>
-  <div class="fav-control">
-    <!-- <img class="fav" src="assets/fav.svg" alt="fav" height="24"> -->
-    <img class="fav" src="assets/favo.svg" alt="fav" height="24" />
+  </a>
+  <div *ngIf="{ isSaved: isSaved$ | async } as state" class="fav-control" (click)="handleFavePostSaved()">
+    <img *ngIf="state.isSaved" class="fav" src="assets/fav.svg" alt="fav" height="24" />
+    <img *ngIf="!state.isSaved" class="fav" src="assets/favo.svg" alt="fav" height="24" />
   </div>
 </div>

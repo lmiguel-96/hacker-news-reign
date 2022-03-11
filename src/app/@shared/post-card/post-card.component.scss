@@ -12,6 +12,7 @@
     cursor: pointer;
     width: calc(100% - 68px);
     padding: 0;
+    text-decoration: none;
 
     .card-title {
       height: 13px;
@@ -39,6 +40,7 @@
   }
 
   .fav-control {
+    cursor: pointer;
     position: absolute;
     width: 68px;
     height: 90px;
@@ -50,5 +52,9 @@
     right: 0;
     bottom: 0;
     top: 0;
+  }
+
+  &:hover {
+    opacity: 0.4;
   }
 }

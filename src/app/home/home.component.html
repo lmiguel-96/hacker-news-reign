@@ -1,67 +1,25 @@
-<ng-container *ngIf="{ page: page$ | async, query: query$ | async, posts: posts$ | async } as state">
-  <div class="container-fluid">
-    <div class="container d-flex justify-content-center">
-      <form>
-        <div class="btn-group" role="group" ngbRadioGroup name="radioBasic">
-          <label ngbButtonLabel class="btn-primary reign-radio">
-            <input ngbButton type="radio" class="btn-check" value="1" />
-            All
-          </label>
-          <label ngbButtonLabel class="btn-primary reign-radio">
-            <input ngbButton type="radio" class="btn-check" value="middle" />
-            My Faves
-          </label>
-        </div>
-      </form>
-    </div>
-
-    <div class="container reign-container">
-      <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-          {{ state.query }}
-        </button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem (click)="handleSearchQuery('angular')">Angular</button>
-          <button ngbDropdownItem (click)="handleSearchQuery('react')">React</button>
-          <button ngbDropdownItem (click)="handleSearchQuery('vuejs')">Vuejs</button>
-        </div>
+<div class="container-fluid">
+  <div class="container d-flex justify-content-center">
+    <form>
+      <div
+        class="btn-group"
+        role="group"
+        ngbRadioGroup
+        name="radioBasic"
+        [ngModel]="view$ | async"
+        (ngModelChange)="handleViewChange($event)"
+      >
+        <label ngbButtonLabel class="btn-primary reign-radio">
+          <input ngbButton type="radio" class="btn-check" [value]="'all'" />
+          All
+        </label>
+        <label ngbButtonLabel class="btn-primary reign-radio">
+          <input ngbButton type="radio" class="btn-check" [value]="'faves'" />
+          My Faves
+        </label>
       </div>
-    </div>
-
-    <div class="container posts">
-      <div class="row gy-4">
-        <div
-          class="col-md-12 col-sm-12 col-lg-6"
-          *ngFor="
-            let post of state.posts?.hits ?? []
-              | paginate
-                : {
-                    id: 'posts-pagination',
-                    itemsPerPage: 8,
-                    currentPage: state.page ?? 0,
-                    totalItems: 992
-                  }
-          "
-        >
-          <reign-post-card
-            [author]="post.author"
-            [title]="post.story_title"
-            [url]="post.url"
-            [createdAt]="post.created_at"
-          ></reign-post-card>
-        </div>
-      </div>
-    </div>
-
-    <pagination-controls
-      id="posts-pagination"
-      class="reign-pagination"
-      (pageChange)="handlePageChange($event)"
-      (pageChange)="handlePageChange($event)"
-      [maxSize]="10"
-      [directionLinks]="true"
-      nextLabel=""
-      previousLabel=""
-    ></pagination-controls>
+    </form>
   </div>
-</ng-container>
+
+  <router-outlet></router-outlet>
+</div>

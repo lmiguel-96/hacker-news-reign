@@ -4,24 +4,6 @@
       <a class="navbar-brand" href="https://github.com/ngx-rocket" translate>
         <img class="navbar-image" src="assets/hacker-news.png" alt="HOME" />
       </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        aria-controls="navbar-menu"
-        aria-label="Toggle navigation"
-        (click)="toggleMenu()"
-        [attr.aria-expanded]="!menuHidden"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div id="navbar-menu" class="collapse navbar-collapse float-xs-none" [ngbCollapse]="menuHidden">
-        <div class="navbar-nav mr-auto">
-          <app-language-selector
-            [inNavbar]="true"
-            menuClass="dropdown-menu dropdown-menu-right"
-          ></app-language-selector>
-        </div>
-      </div>
     </div>
   </nav>
 </header>
