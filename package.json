@@ -38,6 +38,7 @@
     "@popperjs/core": "^2.11.0",
     "bootstrap": "^5.0.2",
     "date-fns": "^2.16.1",
+    "ngx-infinite-scroll": "^10.0.1",
     "ngx-pagination": "^5.1.1",
     "ngx-timeago": "^2.0.0",
     "rxjs": "^7.4.0",

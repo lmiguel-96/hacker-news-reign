@@ -23,13 +23,13 @@ describe('QuoteService', () => {
     httpMock.verify();
   });
 
-  describe('getRandomQuote', () => {
-    it('should return a random Chuck Norris quote', () => {
+  describe('getPosts', () => {
+    it('should return a result from API', () => {
       // Arrange
-      const mockQuote = { value: 'a random quote' };
+      const mockQuote = { value: {} };
 
       // Act
-      const randomQuoteSubscription = quoteService.getPosts({ query: 'toto', page: '1' });
+      const randomQuoteSubscription = quoteService.getPosts({ query: 'toto', page: '1', hitsPerPage: 8 });
 
       // Assert
       randomQuoteSubscription.subscribe((result: HackerNewsQueryResult) => {
@@ -40,7 +40,7 @@ describe('QuoteService', () => {
 
     it('should return an empty array in case of error', () => {
       // Act
-      const randomQuoteSubscription = quoteService.getPosts({ query: 'toto', page: '1' });
+      const randomQuoteSubscription = quoteService.getPosts({ query: 'toto', page: '1', hitsPerPage: 8 });
 
       // Assert
       randomQuoteSubscription.subscribe((result: HackerNewsQueryResult) => {

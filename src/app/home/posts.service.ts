@@ -5,12 +5,13 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { HackerNewsPost, HackerNewsQueryResult } from '@app/@core/models/post.model';
 
 const routes = {
-  posts: (c: PostQueryContext) => `/v1/search_by_date?query=${c.query}&page=${c.page}&hitsPerPage=8`,
+  posts: (c: PostQueryContext) => `/v1/search_by_date?query=${c.query}&page=${c.page}&hitsPerPage=${c.hitsPerPage}`,
 };
 
 export interface PostQueryContext {
   query: string | undefined | null;
   page: string | undefined | null;
+  hitsPerPage: number;
 }
 
 @Injectable({
@@ -22,6 +23,10 @@ export class PostService {
   );
 
   private _lastSelectedQuery$ = new BehaviorSubject<string>(localStorage.getItem('selectedQuery') ?? '');
+
+  private _lastSelectedViewMode$ = new BehaviorSubject<'infinite' | 'normal'>(
+    (localStorage.getItem('selectedViewMode') as 'infinite' | 'normal') ?? 'normal'
+  );
 
   constructor(private httpClient: HttpClient) {}
 
@@ -86,5 +91,24 @@ export class PostService {
    */
   getLastSelectedQuery(): string {
     return this._lastSelectedQuery$.getValue();
+  }
+
+  /**
+   * Sets the user last selected view mode.
+   * The query may be persisted across sessions through localstorage.
+   * @param viewMode The user selected view mode.
+   */
+  setSelectedViewMode(viewMode?: 'infinite' | 'normal') {
+    if (viewMode) {
+      localStorage.setItem('selectedViewMode', viewMode);
+      this._lastSelectedViewMode$.next(viewMode);
+    }
+  }
+
+  /**
+   * Returns users's last selected view mode as string.
+   */
+  getLastSelectedViewMode(): Observable<'infinite' | 'normal'> {
+    return this._lastSelectedViewMode$.asObservable() as Observable<'infinite' | 'normal'>;
   }
 }

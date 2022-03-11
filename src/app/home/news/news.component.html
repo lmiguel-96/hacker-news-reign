@@ -3,10 +3,14 @@
     page: page$ | async,
     query: query$ | async,
     posts: posts$ | async,
+    postsInfinite: postsInfinite$ | async,
     favedPostsListIds: favedPostsListIds$ | async,
-    isLoading: isLoading$ | async
+    isLoading: isLoading$ | async,
+    allPosts: allPosts$ | async,
+    viewMode: viewMode$ | async
   } as state"
 >
+  <!-- Query Selector -->
   <div class="container reign-container">
     <div ngbDropdown class="d-inline-block">
       <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>
@@ -31,55 +35,87 @@
     </div>
   </div>
 
-  <div *ngIf="!state.isLoading; else loadingTemplate" class="container posts">
-    <div class="row gy-4">
-      <div
-        class="col-md-12 col-sm-12 col-lg-6"
-        *ngFor="
-          let post of state.posts?.hits ?? []
-            | paginate: { id: 'posts-pagination', itemsPerPage: 8, currentPage: state.page ?? 0, totalItems: 992 };
-          trackBy: identifyPosts
-        "
-      >
-        <reign-post-card
-          [author]="post.author"
-          [title]="post.story_title"
-          [url]="post.story_url"
-          [createdAt]="post.created_at"
-          [isSaved]="post | saved: state.favedPostsListIds ?? []"
-          (postFaved)="handleFavPostClicked(post)"
-          (postClicked)="handlePostClicked(post)"
-        ></reign-post-card>
-      </div>
-      <ng-container *ngIf="state.posts?.hits?.length === 0" [ngTemplateOutlet]="emptyStateTemplate"></ng-container>
-    </div>
-  </div>
-
+  <!-- Loading Template -->
   <ng-template #loadingTemplate>
     <div class="container posts d-flex justify-content-center align-items-center h-100">
       <reign-loader [isLoading]="state.isLoading"></reign-loader>
     </div>
   </ng-template>
 
-  <ng-template #emptyStateTemplate>
-    <div class="container posts d-flex flex-column justify-content-center align-items-center h-100">
-      <i class="fa fa-inbox fa-3x" aria-hidden="true"></i>
-      There are no items to show on this page :(
-    </div>
-  </ng-template>
+  <!-- Depending on view mode render either normal or infinite scroll pagination -->
+  <ng-container [ngSwitch]="state.viewMode">
+    <!-- Normal pagination -->
+    <ng-container *ngSwitchCase="'normal'">
+      <ng-container *ngIf="!state.isLoading; else loadingTemplate">
+        <div class="container posts">
+          <div class="row gy-4">
+            <div
+              class="col-md-12 col-sm-12 col-lg-6"
+              *ngFor="
+                let post of state.posts?.hits ?? []
+                  | paginate
+                    : { id: 'posts-pagination', itemsPerPage: 8, currentPage: state.page ?? 0, totalItems: 992 };
+                trackBy: identifyPosts
+              "
+            >
+              <reign-post-card
+                [author]="post.author"
+                [title]="post.story_title"
+                [url]="post.story_url"
+                [createdAt]="post.created_at"
+                [isSaved]="post | saved: state.favedPostsListIds ?? []"
+                (postFaved)="handleFavPostClicked(post)"
+                (postClicked)="handlePostClicked(post)"
+              ></reign-post-card>
+            </div>
+            <ng-container
+              *ngIf="state.posts?.hits?.length === 0"
+              [ngTemplateOutlet]="emptyStateTemplate"
+            ></ng-container>
+          </div>
+        </div>
 
-  <pagination-controls
-    *ngIf="!state.isLoading"
-    id="posts-pagination"
-    class="reign-pagination"
-    (pageChange)="handlePageChange($event)"
-    (pageBoundsCorrection)="handlePageChange($event)"
-    [maxSize]="9"
-    [directionLinks]="true"
-    nextLabel=""
-    previousLabel=""
-    [responsive]="true"
-  ></pagination-controls>
+        <pagination-controls
+          id="posts-pagination"
+          class="reign-pagination"
+          (pageChange)="handlePageChange($event)"
+          (pageBoundsCorrection)="handlePageChange($event)"
+          [maxSize]="9"
+          [directionLinks]="true"
+          nextLabel=""
+          previousLabel=""
+          [responsive]="true"
+        ></pagination-controls>
+      </ng-container>
+    </ng-container>
+
+    <!-- Infinite Scroll -->
+    <ng-container *ngSwitchCase="'infinite'">
+      <div class="container posts">
+        <div class="row gy-4">
+          <div
+            infinite-scroll
+            [infiniteScrollDistance]="1"
+            [infiniteScrollThrottle]="500"
+            [infiniteScrollDisabled]="scrollCheck()"
+            (scrolled)="handleScrollDown()"
+            *ngFor="let post of state.allPosts ?? []; trackBy: identifyPosts"
+            class="col-md-12 col-sm-12 col-lg-6"
+          >
+            <reign-post-card
+              [author]="post.author"
+              [title]="post.story_title"
+              [url]="post.story_url"
+              [createdAt]="post.created_at"
+              [isSaved]="post | saved: state.favedPostsListIds ?? []"
+              (postFaved)="handleFavPostClicked(post)"
+              (postClicked)="handlePostClicked(post)"
+            ></reign-post-card>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
 </ng-container>
 
 <ng-template #angular>
@@ -95,4 +131,11 @@
 <ng-template #vuejs>
   <img src="assets/image-141.png" srcset="assets/image-141@2x.png 2x, assets/image-141@3x.png 3x" class="logo" />
   Vuejs
+</ng-template>
+
+<ng-template #emptyStateTemplate>
+  <div class="container posts d-flex flex-column justify-content-center align-items-center h-100">
+    <i class="fa fa-inbox fa-3x" aria-hidden="true"></i>
+    There are no items to show on this page :(
+  </div>
 </ng-template>

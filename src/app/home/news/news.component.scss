@@ -17,6 +17,7 @@
 .container.posts {
   max-width: 100%;
   padding: 0 150px;
+  height: auto;
 
   // Small devices (landscape phones, 576px and up)
   @media (max-width: 576px) {

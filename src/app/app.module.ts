@@ -14,6 +14,7 @@ import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TimeagoModule } from 'ngx-timeago';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { TimeagoModule } from 'ngx-timeago';
     SharedModule,
     ShellModule,
     HomeModule,
+    InfiniteScrollModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],

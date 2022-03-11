@@ -3,5 +3,18 @@
     <a class="navbar-brand" [routerLink]="'/news/all'" translate>
       <img class="navbar-image" src="assets/hacker-news.png" alt="HOME" />
     </a>
+    <div ngbDropdown class="nav-item">
+      <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>
+        <ng-container [ngSwitch]="viewMode$ | async">
+          <ng-container *ngSwitchCase="'normal'">Normal</ng-container>
+          <ng-container *ngSwitchCase="'infinite'">Infinite</ng-container>
+          <ng-container *ngSwitchDefault>Normal</ng-container>
+        </ng-container>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem (click)="handleViewModeChanged('infinite')">Inifinite Scroll</button>
+        <button ngbDropdownItem (click)="handleViewModeChanged('normal')">Normal Pagination</button>
+      </div>
+    </div>
   </nav>
 </header>
