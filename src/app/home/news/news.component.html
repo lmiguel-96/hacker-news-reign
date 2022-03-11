@@ -37,13 +37,8 @@
         class="col-md-12 col-sm-12 col-lg-6"
         *ngFor="
           let post of state.posts?.hits ?? []
-            | paginate
-              : {
-                  id: 'posts-pagination',
-                  itemsPerPage: 8,
-                  currentPage: state.page ?? 0,
-                  totalItems: 992
-                }
+            | paginate: { id: 'posts-pagination', itemsPerPage: 8, currentPage: state.page ?? 0, totalItems: 992 };
+          trackBy: identifyPosts
         "
       >
         <reign-post-card

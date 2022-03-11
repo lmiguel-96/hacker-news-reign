@@ -71,6 +71,10 @@ export class NewsComponent {
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private postService: PostService) {}
 
+  identifyPosts(index: number, post: HackerNewsPost) {
+    return post.objectID;
+  }
+
   handleSearchQuery(searchTerm: 'angular' | 'react' | 'vuejs') {
     this.postService.setSelectedQuery(searchTerm);
     this.isLoading$.next(true);
