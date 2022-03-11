@@ -12,7 +12,7 @@
       <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>
         <ng-container [ngSwitch]="state.query">
           <ng-container *ngSwitchCase="'angular'" [ngTemplateOutlet]="angular"></ng-container>
-          <ng-container *ngSwitchCase="'react'" [ngTemplateOutlet]="react"></ng-container>
+          <ng-container *ngSwitchCase="'reactjs'" [ngTemplateOutlet]="react"></ng-container>
           <ng-container *ngSwitchCase="'vuejs'" [ngTemplateOutlet]="vuejs"></ng-container>
           <ng-container *ngSwitchDefault>Select your news</ng-container>
         </ng-container>
@@ -21,7 +21,7 @@
         <button ngbDropdownItem (click)="handleSearchQuery('angular')">
           <ng-container [ngTemplateOutlet]="angular"></ng-container>
         </button>
-        <button ngbDropdownItem (click)="handleSearchQuery('react')">
+        <button ngbDropdownItem (click)="handleSearchQuery('reactjs')">
           <ng-container [ngTemplateOutlet]="react"></ng-container>
         </button>
         <button ngbDropdownItem (click)="handleSearchQuery('vuejs')">
@@ -73,7 +73,7 @@
     id="posts-pagination"
     class="reign-pagination"
     (pageChange)="handlePageChange($event)"
-    (pageChange)="handlePageChange($event)"
+    (pageBoundsCorrection)="handlePageChange($event)"
     [maxSize]="9"
     [directionLinks]="true"
     nextLabel=""

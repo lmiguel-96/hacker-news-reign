@@ -2,7 +2,8 @@ import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { PostService } from './quote.service';
+import { PostService } from './posts.service';
+import { HackerNewsQueryResult } from '@app/@core/models/post.model';
 
 describe('QuoteService', () => {
   let quoteService: PostService;
@@ -28,23 +29,23 @@ describe('QuoteService', () => {
       const mockQuote = { value: 'a random quote' };
 
       // Act
-      const randomQuoteSubscription = quoteService.getPosts({ category: 'toto' });
+      const randomQuoteSubscription = quoteService.getPosts({ query: 'toto', page: '1' });
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
-        expect(quote).toEqual(mockQuote.value);
+      randomQuoteSubscription.subscribe((result: HackerNewsQueryResult) => {
+        expect(result).toEqual(mockQuote.value);
       });
       httpMock.expectOne({}).flush(mockQuote);
     });
 
-    it('should return a string in case of error', () => {
+    it('should return an empty array in case of error', () => {
       // Act
-      const randomQuoteSubscription = quoteService.getPosts({ category: 'toto' });
+      const randomQuoteSubscription = quoteService.getPosts({ query: 'toto', page: '1' });
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
-        expect(typeof quote).toEqual('string');
-        expect(quote).toContain('Error');
+      randomQuoteSubscription.subscribe((result: HackerNewsQueryResult) => {
+        expect(typeof result).toEqual('object');
+        expect(result).toContain([]);
       });
       httpMock.expectOne({}).flush(null, {
         status: 500,

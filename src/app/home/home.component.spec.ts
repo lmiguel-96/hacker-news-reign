@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { SharedModule } from '@shared';
 import { HomeComponent } from './home.component';
-import { PostService } from './quote.service';
+import { PostService } from './posts.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

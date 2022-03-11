@@ -10,9 +10,8 @@ import {
   switchMap,
   BehaviorSubject,
   tap,
-  withLatestFrom,
 } from 'rxjs';
-import { PostService } from '../quote.service';
+import { PostService } from '../posts.service';
 
 @Component({
   selector: 'reign-news',
@@ -20,14 +19,16 @@ import { PostService } from '../quote.service';
   styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent {
+  // Holds page number for the news view directly from URL as query param
   page$ = this.activatedRoute.queryParamMap.pipe(
     map((paramsMap) => {
-      return paramsMap.get('page') ?? '0';
+      return paramsMap.get('page') ?? '1';
     }),
     distinctUntilChanged(),
     shareReplay(1)
   );
 
+  // Holds search term for query directly from URL as query param
   query$ = this.activatedRoute.queryParamMap.pipe(
     map((paramsMap) => {
       return paramsMap.get('query') ?? this.postService.getLastSelectedQuery();
@@ -36,6 +37,8 @@ export class NewsComponent {
     shareReplay(1)
   );
 
+  // Based on the combination of both page and query a request call is triggered every time so the UI
+  // is reactive enough to reflect the changes
   posts$ = combineLatest([this.page$, this.query$]).pipe(
     switchMap(([page, query]) => {
       const selectedPage = page;
@@ -43,6 +46,10 @@ export class NewsComponent {
       return this.postService.getPosts({ page: selectedPage, query: searchedQuery });
     }),
     map((results: HackerNewsQueryResult) => {
+      /**
+       * if one of the following properties are missing from the post, should be discard:
+       * story_title, story_url, created_at
+       */
       const filteredHits = results.hits.filter((hit) => {
         if (!hit.story_title) {
           return false;
@@ -75,7 +82,7 @@ export class NewsComponent {
     return post.objectID;
   }
 
-  handleSearchQuery(searchTerm: 'angular' | 'react' | 'vuejs') {
+  handleSearchQuery(searchTerm: 'angular' | 'reactjs' | 'vuejs') {
     this.postService.setSelectedQuery(searchTerm);
     this.isLoading$.next(true);
     this.router.navigate([], {

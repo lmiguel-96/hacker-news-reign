@@ -85,9 +85,7 @@
             "development": {
               "browserTarget": "reign-project:build:development"
             },
-            "ci": {
-              "progress": false
-            }
+            "ci": {}
           },
           "defaultConfiguration": "development"
         },

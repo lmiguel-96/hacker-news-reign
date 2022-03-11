@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, map, tap } from 'rxjs';
-import { PostService } from './quote.service';
+import { PostService } from './posts.service';
 
 @Component({
   selector: 'reign-home',

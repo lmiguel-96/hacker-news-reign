@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HackerNewsPost } from '@app/@core/models/post.model';
 import { defaultIfEmpty, distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
-import { PostService } from '../quote.service';
+import { PostService } from '../posts.service';
 
 @Component({
   selector: 'reign-faves',
@@ -10,6 +10,7 @@ import { PostService } from '../quote.service';
   styleUrls: ['./faves.component.scss'],
 })
 export class FavesComponent {
+  // Holds page number for the news view directly from URL as query param
   page$ = this.activatedRoute.queryParamMap.pipe(
     map((paramsMap) => paramsMap.get('page')),
     defaultIfEmpty('0'),
